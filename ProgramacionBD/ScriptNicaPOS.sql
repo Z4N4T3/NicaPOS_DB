@@ -122,36 +122,45 @@ CREATE TABLE rol(
 ALTER TABLE orden
 ADD CONSTRAINT FK_Orden_Cliente
     FOREIGN KEY (id_cliente) REFERENCES cliente(id),
+alter TABLE orden
 ADD CONSTRAINT FK_Orden_Factura
     FOREIGN KEY (id_factura) REFERENCES factura(id);
 
 ALTER TABLE pago
 ADD CONSTRAINT FK_Pago_Orden
-    FOREIGN KEY (id_orden) REFERENCES orden(id),
+    FOREIGN KEY (id_orden) REFERENCES orden(id);
+alter TABLE
 ADD CONSTRAINT FK_Pago_Tipo
     FOREIGN KEY (id_tipo) REFERENCES tipo(id);
 
 ALTER TABLE telefono
 ADD CONSTRAINT FK_Telefono_Cliente
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id);
+alter TABLE telefono
 ADD CONSTRAINT FK_Telefono_Company
     FOREIGN KEY (id_company) REFERENCES company(id);
 
 ALTER TABLE orden_mesero
 ADD CONSTRAINT FK_OrdenMesero_Orden
-    FOREIGN KEY (id_orden) REFERENCES orden(id),
+    FOREIGN KEY (id_orden) REFERENCES orden(id);
+    
+ALTER TABLE orden_mesero    
 ADD CONSTRAINT FK_OrdenMesero_Mesero
     FOREIGN KEY (id_mesero) REFERENCES mesero(id);
 
 ALTER TABLE mesero_rol
 ADD CONSTRAINT FK_MeseroRol_Mesero
-    FOREIGN KEY (id_mesero) REFERENCES mesero(id),
+    FOREIGN KEY (id_mesero) REFERENCES mesero(id);
+
+ALTER TABLE mesero_rol    
 ADD CONSTRAINT FK_MeseroRol_Rol
     FOREIGN KEY (id_rol) REFERENCES rol(id);
 
 ALTER TABLE orden_item
 ADD CONSTRAINT FK_OrdenItem_Orden
-    FOREIGN KEY (id_orden) REFERENCES orden(id),
+    FOREIGN KEY (id_orden) REFERENCES orden(id);
+ALTER TABLE orden_item
+
 ADD CONSTRAINT FK_OrdenItem_Item
     FOREIGN KEY (id_item) REFERENCES item(id);
 
