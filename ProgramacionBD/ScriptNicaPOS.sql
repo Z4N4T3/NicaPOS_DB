@@ -58,7 +58,7 @@ CREATE table factura(
 
 );
 
-CREATE TABLE orden-item(
+CREATE TABLE orden_item(
 	id int PRIMARY key,
   	id_orden int not null,
   	id_item int not null
@@ -89,7 +89,7 @@ CREATE table menu(
   	descripcion varchar(500)
 );
 
-CREATE table orden-mesero(
+CREATE table orden_mesero(
 
 	id int PRIMARY key,
   	id_mesero int not null,
@@ -101,13 +101,12 @@ create TABLE mesero(
 	id int PRIMARY key,
   	nombre varchar(250) not null,
   	apellido varchar(250) not null,
-  	email varchar(250) not null,
-  	PIN varchar(6) not null
-    CONSTRAINT ck_email CHECK(email LIKE('__%@___%.___%'))
-  	
+  	email varchar(250) not null ,
+  	PIN varchar(6) not null,
+    
+  	CONSTRAINT ck_email_mesero CHECK(email LIKE('__%@___%.___%'))
 ); 
-
-create table mesero-rol(
+create table mesero_rol(
 	id int PRIMARY KEY,
   	id_mesero int not null,
   	id_rol int not null
@@ -120,47 +119,46 @@ CREATE TABLE rol(
 );
 
 
-ALTER table orden
-ADD CONSTRAINT FK_id_cliente
-	FOREIGN key id_cliente refenreces cliente(id),
-    CONSTRAINT fk_id_factura
-  	FOREIGN key id_factura references factura(id)
-    
- alter TABLE pago
- 	ADD CONSTRAINT fk_orden
-    	FOREIGN key id_orden references orden(id),
-        CONSTRAINT fk_tipo
-        FOREIGN KEY id_tipo references tipo(id)
-  alter table telefono
-  	add CONSTRAINT fk_cliente
-    	FOREIGN KEY id_cliente references cliente(id),
-        CONSTRAINT fk_company
-        FOREIGN KEY id_company references company(id)
+ALTER TABLE orden
+ADD CONSTRAINT FK_Orden_Cliente
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id),
+ADD CONSTRAINT FK_Orden_Factura
+    FOREIGN KEY (id_factura) REFERENCES factura(id);
 
-alter TABLE orden-mesero
-	add CONSTRAINT fk_orden
-    	FOREIGN KEY id_orden references orden(id),
-        CONSTRAINT fk_mesero
-        FOREIGN KEY id_mesero references mesero(id)
-       
-alter TABLE mesero-rol
-	add CONSTRAINT fk_mesero
-    	FOREIGN KEY id_mesero references mesero(id),
-        CONSTRAINT fk_rol
-        FOREIGN KEY id_rol references rol(id)
-        
-        
-alter TABLE orden-item
-	add CONSTRAINT fk_orden
-  	FOREIGN KEY id_orden references orden(id),
-    CONSTRAINT fk_item
-    FOREIGN KEY id_item references item(id)
-    
-    
-    
- alter table item
- 	add CONSTRAINT fk_grupo
-    	FOREIGN key id_grupo references grupo(id)    
- alter table grupo
- 	add CONSTRAINT fk_menu
-    	FOREIGN key id_menu references menu(id)
+ALTER TABLE pago
+ADD CONSTRAINT FK_Pago_Orden
+    FOREIGN KEY (id_orden) REFERENCES orden(id),
+ADD CONSTRAINT FK_Pago_Tipo
+    FOREIGN KEY (id_tipo) REFERENCES tipo(id);
+
+ALTER TABLE telefono
+ADD CONSTRAINT FK_Telefono_Cliente
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id),
+ADD CONSTRAINT FK_Telefono_Company
+    FOREIGN KEY (id_company) REFERENCES company(id);
+
+ALTER TABLE orden_mesero
+ADD CONSTRAINT FK_OrdenMesero_Orden
+    FOREIGN KEY (id_orden) REFERENCES orden(id),
+ADD CONSTRAINT FK_OrdenMesero_Mesero
+    FOREIGN KEY (id_mesero) REFERENCES mesero(id);
+
+ALTER TABLE mesero_rol
+ADD CONSTRAINT FK_MeseroRol_Mesero
+    FOREIGN KEY (id_mesero) REFERENCES mesero(id),
+ADD CONSTRAINT FK_MeseroRol_Rol
+    FOREIGN KEY (id_rol) REFERENCES rol(id);
+
+ALTER TABLE orden_item
+ADD CONSTRAINT FK_OrdenItem_Orden
+    FOREIGN KEY (id_orden) REFERENCES orden(id),
+ADD CONSTRAINT FK_OrdenItem_Item
+    FOREIGN KEY (id_item) REFERENCES item(id);
+
+ALTER TABLE item
+ADD CONSTRAINT FK_Item_Grupo
+    FOREIGN KEY (id_grupo) REFERENCES grupo(id);
+
+ALTER TABLE grupo
+ADD CONSTRAINT FK_Grupo_Menu
+    FOREIGN KEY (id_menu) REFERENCES menu(id);
